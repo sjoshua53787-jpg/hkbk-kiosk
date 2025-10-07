@@ -4,39 +4,45 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>HKBK College Kiosk — HK-Counselor</title>
+
+  <!-- fonts + styles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="container row between">
-    <div class="row">
-      <!-- replace with the real logo URL when you have it -->
-      <img class="logo" src="https://placehold.co/200x48/5b8cfe/ffffff?text=HKBK+Logo" alt="HKBK Logo">
-      <span class="badge">HK-Counselor</span>
+  <!-- colorful hero header -->
+  <div class="hero">
+    <div class="container hero-inner">
+      <div class="brand">
+        <!-- replace with real logo URL when you have it -->
+        <img class="logo" src="https://placehold.co/220x54/2563eb/ffffff?text=HKBK+Logo" alt="HKBK Logo">
+        <span class="tag">HK-Counselor</span>
+      </div>
+      <div id="liveClock" class="chip">—</div>
     </div>
-    <div id="liveClock" class="badge">—</div>
-  </header>
+  </div>
 
+  <!-- nav -->
   <nav class="nav container">
-    <a class="btn" href="#/">Home</a>
-    <a class="btn" href="#/admissions">Admissions</a>
-    <a class="btn" href="#/placements">Placements</a>
-    <a class="btn" href="#/campus">Campus map</a>
-    <a class="btn" href="#/knowledge">Knowledge</a>
-    <a class="btn" href="#/staff">Staff</a>
-    <a class="btn" href="#/gallery">Gallery</a>
-    <a class="btn" href="#/feedback">Feedback</a>
+    <a class="pill" href="#/">Home</a>
+    <a class="pill" href="#/admissions">Admissions</a>
+    <a class="pill" href="#/placements">Placements</a>
+    <a class="pill" href="#/campus">Campus map</a>
+    <a class="pill" href="#/knowledge">Knowledge</a>
+    <a class="pill" href="#/staff">Staff</a>
+    <a class="pill" href="#/gallery">Gallery</a>
+    <a class="pill" href="#/feedback">Feedback</a>
   </nav>
 
   <main class="container" id="app"></main>
 
-  <footer class="container small" style="margin-top:24px;">
-    HKBK College Kiosk • Human-first voice • Short persuasive replies • Charts via Chart.js (client-only)
+  <footer class="container tiny">
+    © HKBK Kiosk demo • Human-first voice • Charts via Chart.js (client-only)
   </footer>
 
-  <!-- Chart.js CDN for charts -->
+  <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
   <script src="app.js"></script>
 </body>
