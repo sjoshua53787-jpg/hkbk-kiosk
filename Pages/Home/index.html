@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Home — HKBK Kiosk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css" />
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="container grid grid-2">
+    <div class="card">
+      <h1>Chat with HK-Counselor</h1>
+      <div id="chat"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+        <input id="q" placeholder="Ask about admissions, placements, campus..." />
+        <a class="pill" href="javascript:void(0)" id="askBtn">Ask</a>
+        <a class="pill" href="javascript:void(0)" id="micBtn">🎤 Speak</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h1>Highlights</h1>
+      <div class="stats">
+        <div class="stat"><div class="num" id="hp">—</div><div class="sub">Highest Package (2023)</div></div>
+        <div class="stat"><div class="num" id="pr">—</div><div class="sub">Placement Rate (2023)</div></div>
+        <div class="stat"><div class="num" id="rec">—</div><div class="sub">Recruiters</div></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="container tiny">© HKBK Kiosk demo</footer>
+
+  <script src="../../assets/site.js"></script>
+  <script>
+    renderShell('Home');
+
+    const chat = document.getElementById('chat');
+    function push(role, text){
+      const line = document.createElement('div');
+      line.className = 'tiny'; line.style.display='flex'; line.style.gap='8px';
+      const tag = document.createElement('strong'); tag.textContent=role.toUpperCase();
+      const msg = document.createElement('div'); msg.textContent = text;
+      line.append(tag,msg); chat.append(line);
+    }
+    push('ai','Hello! I’m HK-Counselor — how can I help you today?');
+
+    document.getElementById('askBtn').onclick = () => {
+      const t=document.getElementById('q').value.trim(); if(!t) return;
+      push('you', t); push('ai', window.answer(t)); document.getElementById('q').value='';
+    };
+    document.getElementById('micBtn').onclick = () => window.micListen(t => { push('you', t); push('ai', window.answer(t)); });
+
+    document.getElementById('hp').textContent = window.FACTS.highestPackage;
+    document.getElementById('pr').textContent = window.FACTS.placementRate + '%';
+    document.getElementById('rec').textContent = window.FACTS.recruiters;
+  </script>
+</body>
+</html>
