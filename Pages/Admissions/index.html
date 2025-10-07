@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Admissions — HKBK Kiosk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css" />
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="container">
+    <div class="card">
+      <h1>Admissions — AI & ML</h1>
+      <div class="stats">
+        <div class="stat"><div class="num">CET / COMEDK / Management</div><div class="sub">Eligibility</div></div>
+        <div class="stat"><div class="num">Scholarships + Loan Help</div><div class="sub">Support</div></div>
+        <div class="stat"><div class="num" id="hodName">—</div><div class="sub" id="hodMeta">—</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Quick Inquiry</h2>
+      <form id="inq" class="grid">
+        <div><label>Name</label><input name="name" required></div>
+        <div><label>Email</label><input name="email" type="email" required></div>
+        <div><label>Program</label><select name="program"><option>AI & ML</option><option>CSE</option><option>ECE</option></select></div>
+        <div><label>Your Question</label><textarea name="msg" rows="4" placeholder="Scholarship? Eligibility?"></textarea></div>
+        <button class="pill" type="submit">Submit</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="container tiny">© HKBK Kiosk demo</footer>
+
+  <script src="../../assets/site.js"></script>
+  <script>
+    renderShell('Admissions');
+    document.getElementById('hodName').textContent = window.FACTS.hod.name;
+    document.getElementById('hodMeta').innerHTML = `${window.FACTS.hod.role} • <a href="mailto:${window.FACTS.hod.email}">${window.FACTS.hod.email}</a>`;
+
+    document.getElementById('inq').onsubmit = (e)=>{
+      e.preventDefault();
+      const fd=new FormData(e.target);
+      const entry=Object.fromEntries(fd.entries());
+      entry.created_at=new Date().toISOString();
+      const all=JSON.parse(localStorage.getItem('admissions')||'[]'); all.push(entry);
+      localStorage.setItem('admissions', JSON.stringify(all));
+      alert('Thanks! Saved locally (demo).'); e.target.reset();
+    };
+  </script>
+</body>
+</html>
