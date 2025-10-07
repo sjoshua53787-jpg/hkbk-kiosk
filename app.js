@@ -124,4 +124,131 @@ function Admissions(){
   c.querySelector('#f').onsubmit = (e)=>{
     e.preventDefault();
     const fd = new FormData(e.target);
-    const entry = { name:fd.get('name'), email:fd.get('email'), program:fd.get('program'), msg:fd.get('msg'), created_at:new Date().to_
+    const entry = { name:fd.get('name'), email:fd.get('email'), program:fd.get('program'), msg:fd.get('msg'), created_at:new Date().toISOString() };
+    const arr = JSON.parse(localStorage.getItem('admissions')||'[]'); arr.push(entry);
+    localStorage.setItem('admissions', JSON.stringify(arr));
+    alert('Thanks! Saved locally (demo).');
+    e.target.reset();
+  };
+  return c;
+}
+
+function Placements(){
+  return card(`<h1>Placements Snapshot</h1>
+    <ul class="list">
+      <li>Highest Package: ₹32.4 LPA</li>
+      <li>Overall Placements: 93%+ (recent batches)</li>
+      <li>Focus: AI/ML, Data, Cloud, Full-stack roles</li>
+    </ul>
+    <p class="small">Keep answers short and persuasive — human-first marketing tone.</p>
+  `);
+}
+
+function CampusMap(){
+  const SPOTS = [
+    ['Admissions Office','Ground Floor – Admin Block'],
+    ['HOD (AI&ML) Cabin','Block C – 2nd Floor'],
+    ['Main Library','Block B – 1st Floor'],
+    ['Canteen','Near Central Courtyard'],
+    ['Prayer Room','Block A – Ground'],
+    ['Sports Facilities','Behind Block D'],
+    ['Accounts Section','Admin Block – 1st Floor'],
+    ['Washroom','Every floor – near stairwell'],
+    ['Hostels','Boys (North Wing), Girls (South Wing)']
+  ];
+  const wrap = document.createElement('div'); wrap.className='grid grid-2';
+  SPOTS.forEach(([name,desc])=>{
+    wrap.appendChild(card(`<h2>${name}</h2><div class="small">${desc}</div>`));
+  });
+  return wrap;
+}
+
+function Knowledge(){
+  return card(`<h1>Knowledge Base</h1>
+    <ul class="list">
+      <li>Admissions: CET/COMEDK/Management; scholarships and loan guidance.</li>
+      <li>AI & ML: Strong curriculum, modern labs, projects, hackathons.</li>
+      <li>Events & Workshops: Tech talks, coding marathons, industry sessions.</li>
+    </ul>
+  `);
+}
+
+function Staff(){
+  const STAFF = [
+    {name:'Dr. A. Example', role:'HOD, AI & ML', subjects:'ML, DL', expertise:'Vision, NLP', photo:'https://placehold.co/120'},
+    {name:'Prof. B. Example', role:'Professor', subjects:'DSA, Python', expertise:'Systems', photo:'https://placehold.co/120'},
+    {name:'Ms. C. Example', role:'Assistant Professor', subjects:'DBMS, Big Data', expertise:'Data Eng', photo:'https://placehold.co/120'},
+  ];
+  const grid = document.createElement('div'); grid.className='grid grid-2';
+  STAFF.forEach(s=>{
+    const item = document.createElement('div'); item.className='card row';
+    item.innerHTML = `
+      <img src="${s.photo}" width="80" height="80" style="border-radius:12px" alt="${s.name}">
+      <div>
+        <h2>${s.name}</h2>
+        <div class="small">${s.role}</div>
+        <div>Subjects: ${s.subjects}</div>
+        <div class="small">Expertise: ${s.expertise}</div>
+      </div>`;
+    grid.appendChild(item);
+  });
+  return grid;
+}
+
+function Gallery(){
+  const ITEMS = [
+    ['Student Trophies','https://placehold.co/400x220?text=Trophies'],
+    ['Major Projects','https://placehold.co/400x220?text=Projects'],
+    ['AI & ML Labs','https://placehold.co/400x220?text=Labs'],
+  ];
+  const grid = document.createElement('div'); grid.className='grid grid-2';
+  ITEMS.forEach(([title,src])=>{
+    const cardEl = card(`<img class="thumb" src="${src}" alt="${title}"><h2>${title}</h2>`);
+    grid.appendChild(cardEl);
+  });
+  return grid;
+}
+
+function Feedback(){
+  const wrap = document.createElement('div'); wrap.className='grid grid-2';
+
+  const ratings = {staff:0,hospitality:0,campus:0,first:0};
+  function StarRow(label,key){
+    const box = document.createElement('div');
+    const title = document.createElement('div'); title.className='small'; title.textContent = label;
+    const row = document.createElement('div');
+    for(let i=1;i<=5;i++){
+      const s=document.createElement('span'); s.className='star'; s.textContent='☆';
+      s.onclick=()=>{ ratings[key]=i; [...row.children].forEach((c,idx)=>c.textContent = (idx<i?'★':'☆')); };
+      row.appendChild(s);
+    }
+    box.append(title,row); return box;
+  }
+
+  const left = card('<h1>Rate your experience</h1>');
+  left.append(
+    StarRow('Staff','staff'),
+    StarRow('Hospitality','hospitality'),
+    StarRow('Campus','campus'),
+    StarRow('First Experience','first'),
+  );
+
+  const right = card('<h1>Say more (voice or text)</h1>');
+  const ta = document.createElement('textarea'); ta.rows=6; ta.placeholder='Your comments…';
+  const voice = button('🎙️ Voice Note (demo)', ()=> speak('Recording is demo only; not stored on a server.'));
+  const save = button('Submit', ()=>{
+    const entry = {...ratings, text:ta.value, created_at:new Date().toISOString()};
+    const all = JSON.parse(localStorage.getItem('feedback')||'[]'); all.push(entry);
+    localStorage.setItem('feedback', JSON.stringify(all));
+    alert('Thanks for the feedback!');
+    ta.value=''; ['staff','hospitality','campus','first'].forEach(k=>ratings[k]=0);
+  });
+  right.append(ta, document.createElement('div'), row(voice, save));
+
+  wrap.append(left,right);
+  return wrap;
+}
+
+function NotFound(){
+  return card('<h1>Page not found</h1><p class="small">Use the buttons above.</p>');
+}
