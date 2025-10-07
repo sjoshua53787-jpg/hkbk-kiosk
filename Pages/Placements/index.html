@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Placements — HKBK Kiosk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="container">
+    <div class="card">
+      <h1>Placements Overview</h1>
+      <div class="stats">
+        <div class="stat"><div class="num" id="hp">—</div><div class="sub">Highest Package (2023)</div></div>
+        <div class="stat"><div class="num" id="pr">—</div><div class="sub">Placement Rate (2023)</div></div>
+        <div class="stat"><div class="num" id="of">—</div><div class="sub">Offers (2022–23)</div></div>
+        <div class="stat"><div class="num" id="pl">—</div><div class="sub">Students Placed (2022–23)</div></div>
+      </div>
+      <p class="tiny">Official 2023 stats; 2022–23 batch counts for offers/placed/companies.</p>
+    </div>
+
+    <div class="card">
+      <h2>Offers vs Placed vs Companies (2022–23)</h2>
+      <canvas id="bar2023" height="130"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Placement Rate (2023)</h2>
+      <canvas id="pie2023" height="130"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Placement Journey</h2>
+      <div class="flow">
+        <div class="node">Prep & Training</div><div class="arrow">➜</div>
+        <div class="node">Aptitude + Soft Skills</div><div class="arrow">➜</div>
+        <div class="node">On-Campus Drives</div><div class="arrow">➜</div>
+        <div class="node">Interviews</div><div class="arrow">➜</div>
+        <div class="node">Offer & Onboarding</div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="container tiny">© HKBK Kiosk demo</footer>
+
+  <script src="../../assets/site.js"></script>
+  <script src="../../assets/charts.js"></script>
+  <script>
+    renderShell('Placements');
+    hp.textContent = window.FACTS.highestPackage;
+    pr.textContent = window.FACTS.placementRate + '%';
+    of.textContent = window.FACTS.offers2023 + '+';
+    pl.textContent = window.FACTS.placed2023;
+
+    renderBar('bar2023', ['Offers','Placed','Companies'], [window.FACTS.offers2023, window.FACTS.placed2023, window.FACTS.companies2023], '2022–23');
+    renderPie('pie2023', window.FACTS.placementRate);
+  </script>
+</body>
+</html>
