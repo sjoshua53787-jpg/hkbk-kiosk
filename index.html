@@ -4,12 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>HKBK College Kiosk — HK-Counselor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="container row between">
     <div class="row">
-      <img class="logo" src="https://placehold.co/180x42?text=HKBK+Logo" alt="HKBK Logo">
+      <!-- replace with the real logo URL when you have it -->
+      <img class="logo" src="https://placehold.co/200x48/5b8cfe/ffffff?text=HKBK+Logo" alt="HKBK Logo">
       <span class="badge">HK-Counselor</span>
     </div>
     <div id="liveClock" class="badge">—</div>
@@ -29,9 +33,11 @@
   <main class="container" id="app"></main>
 
   <footer class="container small" style="margin-top:24px;">
-    HKBK College Kiosk demo • Human-first voice • Short, persuasive answers • Local-only (no server)
+    HKBK College Kiosk • Human-first voice • Short persuasive replies • Charts via Chart.js (client-only)
   </footer>
 
+  <!-- Chart.js CDN for charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
