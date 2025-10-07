@@ -57,17 +57,13 @@ function Home(){
   const wrap = document.createElement('div');
   wrap.className = 'grid grid-2';
 
-  /* Chat card */
   const chat = card(`<h1>Chat</h1>
     <p class="small">Human-first counselor. Ask anything — I’ll keep it short & helpful.</p>
     <div id="chatStream"></div>
   `);
   const stream = chat.querySelector('#chatStream');
+  pushMsg('ai', `Hello there! I'm HK-Counselor, your guide at HKBK College of Engineering. I'm so glad you stopped by!`);
 
-  // initial message
-  pushMsg('ai', `Hello there! I'm HK-Counselor, your personal guide at HKBK College of Engineering. I'm so glad you stopped by! What can I help you discover about HKBK today?`);
-
-  // controls
   const askText = document.createElement('input');
   askText.placeholder = 'Type your question...';
   const askBtn = button('Ask', ()=>handleAsk(askText.value));
@@ -91,14 +87,12 @@ function Home(){
   }
   function shortAnswer(q){
     const marketing = 'We’re proud of AI & ML — modern labs, vibrant campus life, 93%+ placements, highest package ₹32.4 LPA.';
-    // tiny demo “knowledge”
     if(/admission|fee|apply|elig/i.test(q)) return 'For Admissions: AI & ML accepts CET/COMEDK/Management. Scholarships & loan help available. ' + marketing;
     if(/placement|job|package/i.test(q)) return 'Placements: 93%+ with highest ₹32.4 LPA. Roles in AI/ML, Data, Cloud, Full-stack. ' + marketing;
-    if(/where|campus|map|hod|office/i.test(q)) return 'Use Campus Map page for directions: Admissions Office, HOD (AI&ML), Library, Canteen, Hostels, and more. ' + marketing;
+    if(/where|campus|map|hod|office/i.test(q)) return 'See Campus Map page for directions: Admissions Office, HOD (AI&ML), Library, Canteen, Hostels, and more. ' + marketing;
     return `Great question! ${marketing}`;
   }
 
-  /* Quick actions */
   const quick = card(`<h1>Quick actions</h1>`);
   quick.appendChild(row(
     button('AI&ML Admissions', ()=>handleAsk('Tell me about AI & ML admissions')),
@@ -112,7 +106,7 @@ function Home(){
 
 function Admissions(){
   const c = card(`<h1>Admissions — AI & ML</h1>
-    <p class="small">Eligibility via CET/COMEDK/Management. Scholarships + education loan guidance available.</p>
+    <p class="small">Eligibility via CET/COMEDK/Management. Scholarships + loan guidance available.</p>
     <form id="f" class="grid">
       <div><label>Name</label><input name="name" required></div>
       <div><label>Email</label><input name="email" type="email" required></div>
@@ -219,7 +213,13 @@ function Feedback(){
     const row = document.createElement('div');
     for(let i=1;i<=5;i++){
       const s=document.createElement('span'); s.className='star'; s.textContent='☆';
-      s.onclick=()=>{ ratings[key]=i; [...row.children].forEach((c,idx)=>c.textContent = (idx<i?'★':'☆')); };
+      s.onclick=()=>{
+        ratings[key]=i;
+        [...row.children].forEach((c,idx)=>{
+          c.textContent = (idx<i?'★':'☆');
+          c.classList.toggle('selected', idx<i);
+        });
+      };
       row.appendChild(s);
     }
     box.append(title,row); return box;
@@ -252,4 +252,3 @@ function Feedback(){
 function NotFound(){
   return card('<h1>Page not found</h1><p class="small">Use the buttons above.</p>');
 }
-
